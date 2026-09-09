@@ -22,6 +22,39 @@ const deletePhoto = document.getElementById("deletePhoto");
 let photos = [];
 let currentPhoto = 0;
 
+const dailyMusic = document.getElementById("dailyMusic");
+
+const manageMusicBtn = document.getElementById("manageMusicBtn");
+
+const musicList = document.getElementById("musicList");
+
+const addMusicBtn = document.getElementById("addMusicBtn");
+
+const addMusicForm = document.getElementById("addMusicForm");
+
+const musicTitle = document.getElementById("musicTitle");
+const musicArtist = document.getElementById("musicArtist");
+const musicMessage = document.getElementById("musicMessage");
+const musicYoutube = document.getElementById("musicYoutube");
+const musicSpotify = document.getElementById("musicSpotify");
+
+const musicModalTitle =
+    document.getElementById("musicModalTitle");
+
+const musicModalArtist =
+    document.getElementById("musicModalArtist");
+
+const musicModalMessage =
+    document.getElementById("musicModalMessage");
+
+const youtubeButton =
+    document.getElementById("youtubeButton");
+
+const spotifyButton =
+    document.getElementById("spotifyButton");
+
+let musicas = [];
+let musicaAtual = null;
 
 // =========================
 // CARREGAR FOTOS
@@ -464,3 +497,337 @@ function atualizarContador() {
 atualizarContador();
 
 setInterval(atualizarContador, 1000);
+
+// =========================
+// MÚSICAS
+// =========================
+
+async function loadMusicas() {
+    try {
+        const response = await fetch(
+            `${API_URL.replace("/fotos", "/musicas")}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Erro ao buscar músicas.");
+        }
+
+        musicas = await response.json();
+
+        createDailyMusic();
+        createMusicList();
+
+    } catch (error) {
+        console.error("Erro ao carregar músicas:", error);
+    }
+}
+
+function createDailyMusic() {
+
+    const musica = musicas.find(
+        musica => musica.musica_do_dia === true
+    );
+
+    if (!musica) {
+
+        dailyMusic.innerHTML = `
+            <div class="music-empty">
+                <i class="bi bi-music-note"></i>
+                <span>nenhuma música por enquanto</span>
+            </div>
+        `;
+
+        return;
+    }
+
+    musicaAtual = musica;
+
+    dailyMusic.innerHTML = `
+        <div class="music-note">
+
+            <div class="music-note-icon">
+                <i class="bi bi-music-note"></i>
+            </div>
+
+            <div class="music-note-info">
+
+                <strong>
+                    ${escapeHTML(musica.titulo)}
+                </strong>
+
+                <span>
+                    ${escapeHTML(musica.artista)}
+                </span>
+
+            </div>
+
+            <i class="bi bi-chevron-right music-arrow"></i>
+
+        </div>
+    `;
+
+    dailyMusic.querySelector(".music-note")
+        .addEventListener("click", () => {
+            openMusic(musica);
+        });
+}
+
+function openMusic(musica) {
+
+    musicaAtual = musica;
+
+    musicModalTitle.textContent =
+        musica.titulo;
+
+    musicModalArtist.textContent =
+        musica.artista;
+
+    musicModalMessage.textContent =
+        musica.mensagem || "";
+
+    if (musica.youtube_url) {
+
+        youtubeButton.href =
+            musica.youtube_url;
+
+        youtubeButton.style.display =
+            "flex";
+
+    } else {
+
+        youtubeButton.style.display =
+            "none";
+    }
+
+    if (musica.spotify_url) {
+
+        spotifyButton.href =
+            musica.spotify_url;
+
+        spotifyButton.style.display =
+            "flex";
+
+    } else {
+
+        spotifyButton.style.display =
+            "none";
+    }
+
+    const modal =
+        bootstrap.Modal.getOrCreateInstance(
+            document.getElementById("musicModal")
+        );
+
+    modal.show();
+}
+
+function createMusicList() {
+
+    musicList.innerHTML = "";
+
+    if (musicas.length === 0) {
+
+        musicList.innerHTML = `
+            <p class="music-empty">
+                nenhuma música cadastrada
+            </p>
+        `;
+
+        return;
+    }
+
+    musicas.forEach(musica => {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "music-list-item";
+
+        item.innerHTML = `
+
+            <div class="music-list-info">
+
+                <strong>
+                    ${escapeHTML(musica.titulo)}
+                </strong>
+
+                <span>
+                    ${escapeHTML(musica.artista)}
+                </span>
+
+            </div>
+
+            <button
+                class="choose-music"
+                data-id="${musica.id}"
+            >
+                ${musica.musica_do_dia
+                    ? "atual"
+                    : "usar"}
+            </button>
+
+        `;
+
+        const button =
+            item.querySelector(".choose-music");
+
+        if (!musica.musica_do_dia) {
+
+            button.addEventListener(
+                "click",
+                () => setMusicOfDay(musica.id)
+            );
+
+        } else {
+
+            button.disabled = true;
+        }
+
+        musicList.appendChild(item);
+    });
+}
+
+async function setMusicOfDay(id) {
+
+    try {
+
+        const response = await fetch(
+            `${API_URL.replace("/fotos", "/musicas")}/${id}/dia`,
+            {
+                method: "PUT"
+            }
+        );
+
+        const resultado =
+            await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                resultado.erro ||
+                "Erro ao definir música."
+            );
+        }
+
+        await loadMusicas();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(error.message);
+    }
+}
+
+addMusicForm.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+        const dados = {
+
+            titulo: musicTitle.value.trim(),
+
+            artista: musicArtist.value.trim(),
+
+            mensagem: musicMessage.value.trim(),
+
+            youtube_url:
+                musicYoutube.value.trim(),
+
+            spotify_url:
+                musicSpotify.value.trim()
+        };
+
+        try {
+
+            const response = await fetch(
+                API_URL.replace("/fotos", "/musicas"),
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify(dados)
+                }
+            );
+
+            const resultado =
+                await response.json();
+
+            if (!response.ok) {
+
+                throw new Error(
+                    resultado.erro ||
+                    "Erro ao adicionar música."
+                );
+            }
+
+            addMusicForm.reset();
+
+            const modal =
+                bootstrap.Modal.getInstance(
+                    document.getElementById(
+                        "addMusicModal"
+                    )
+                );
+
+            modal.hide();
+
+            await loadMusicas();
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(error.message);
+        }
+    }
+);
+
+manageMusicBtn.addEventListener(
+    "click",
+    () => {
+
+        createMusicList();
+
+        const modal =
+            bootstrap.Modal.getOrCreateInstance(
+                document.getElementById(
+                    "musicListModal"
+                )
+            );
+
+        modal.show();
+    }
+);
+
+
+addMusicBtn.addEventListener(
+    "click",
+    () => {
+
+        const modal =
+            bootstrap.Modal.getOrCreateInstance(
+                document.getElementById(
+                    "addMusicModal"
+                )
+            );
+
+        modal.show();
+    }
+);
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = text || "";
+
+    return div.innerHTML;
+}
+
+loadMusicas();
