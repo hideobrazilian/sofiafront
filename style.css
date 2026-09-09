@@ -1,0 +1,739 @@
+:root {
+    --bg: #0f0e10;
+    --bg-soft: #151316;
+    --card: #19171a;
+
+    --text: #f3eef1;
+    --muted: #958b91;
+
+    --accent: #b86b83;
+    --accent-light: #d99aaa;
+
+    --border: rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================
+   RESET
+========================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at 50% -20%,
+            rgba(184, 107, 131, 0.07),
+            transparent 35%
+        ),
+        var(--bg);
+
+    color: var(--text);
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+/* ==========================
+   CONTAINER
+========================== */
+
+main {
+    width: 100%;
+    max-width: 1180px;
+
+    margin: 0 auto;
+
+    padding: 52px 34px 100px;
+}
+
+/* ==========================
+   TOPO
+========================== */
+
+.top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 46px;
+}
+
+.top > div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+/* título */
+
+.top h1 {
+    margin: 0;
+
+    font-size: 29px;
+    line-height: 1;
+
+    font-weight: 400;
+
+    letter-spacing: -1px;
+
+    color: var(--text);
+}
+
+/* contador */
+
+#contador {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    letter-spacing: 0.15px;
+}
+
+/* ==========================
+   BOTÃO +
+========================== */
+
+.add-button {
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid var(--border);
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    color: var(--accent-light);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.add-button:hover {
+    background: rgba(184, 107, 131, 0.12);
+
+    border-color: rgba(217, 154, 170, 0.35);
+
+    transform: rotate(90deg);
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.25),
+        0 0 20px rgba(184, 107, 131, 0.08);
+}
+
+/* ==========================
+   GALERIA
+========================== */
+
+.gallery {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 16px;
+}
+
+/* cada foto */
+
+.gallery-item {
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 7px;
+
+    background: var(--bg-soft);
+
+    cursor: pointer;
+
+    border: 1px solid rgba(255, 255, 255, 0.035);
+
+    box-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.18);
+
+    animation: photoAppear 0.5s ease both;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-4px);
+
+    border-color: rgba(217, 154, 170, 0.18);
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.35);
+}
+
+/* imagem */
+
+.gallery-item img {
+    display: block;
+
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.5s ease,
+        opacity 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.035);
+
+    opacity: 0.94;
+}
+
+/* animação das fotos */
+
+@keyframes photoAppear {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================
+   MODAL DA FOTO
+========================== */
+
+.modal-dialog {
+    max-width: 920px;
+}
+
+.modal-content {
+    background: transparent;
+
+    border: none;
+
+    overflow: hidden;
+}
+
+/* imagem ampliada */
+
+.modal-content > img {
+    display: block;
+
+    width: 100%;
+    max-height: 76vh;
+
+    object-fit: contain;
+
+    background: #080709;
+
+    border-radius: 8px 8px 0 0;
+}
+
+/* ==========================
+   BOTÃO FECHAR
+========================== */
+
+.close-button {
+    position: absolute;
+
+    top: 14px;
+    right: 14px;
+
+    width: 38px;
+    height: 38px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    color: white;
+
+    z-index: 20;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    backdrop-filter: blur(8px);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.close-button:hover {
+    background: var(--accent);
+
+    transform: scale(1.05);
+}
+
+/* ==========================
+   NAVEGAÇÃO
+========================== */
+
+.navigation {
+    position: absolute;
+
+    top: 43%;
+
+    width: 44px;
+    height: 44px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    color: white;
+
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    backdrop-filter: blur(8px);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.navigation:hover {
+    background: var(--accent);
+
+    transform: scale(1.06);
+}
+
+.previous {
+    left: 14px;
+}
+
+.next {
+    right: 14px;
+}
+
+/* ==========================
+   INFORMAÇÕES DA FOTO
+========================== */
+
+.photo-info {
+    position: relative;
+
+    background: var(--card);
+
+    padding: 18px 21px 20px;
+
+    border-top: 1px solid var(--border);
+
+    border-radius: 0 0 8px 8px;
+}
+
+.photo-info span {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #756c72;
+
+    font-size: 10px;
+
+    letter-spacing: 0.7px;
+}
+
+.photo-info p {
+    margin: 0;
+}
+
+/* data */
+
+#modalDate {
+    margin-bottom: 7px;
+
+    color: var(--accent-light);
+
+    font-size: 12px;
+
+    letter-spacing: 0.2px;
+}
+
+/* mensagem */
+
+#modalDescription {
+    padding-right: 48px;
+
+    color: var(--text);
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+/* ==========================
+   EXCLUIR
+========================== */
+
+.delete-button {
+    position: absolute;
+
+    right: 17px;
+    bottom: 17px;
+
+    width: 33px;
+    height: 33px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #756d72;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.delete-button:hover {
+    background: rgba(184, 107, 131, 0.13);
+
+    color: var(--accent-light);
+}
+
+/* ==========================
+   MODAL ADICIONAR
+========================== */
+
+.add-modal {
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 13px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.55);
+}
+
+.add-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 23px;
+}
+
+.add-header h2 {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: 21px;
+
+    font-weight: 400;
+
+    letter-spacing: -0.4px;
+}
+
+.add-header .close-button {
+    position: static;
+
+    width: 32px;
+    height: 32px;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    backdrop-filter: none;
+}
+
+.add-header .close-button:hover {
+    background: rgba(184, 107, 131, 0.12);
+
+    color: var(--accent-light);
+}
+
+/* ==========================
+   FORMULÁRIO
+========================== */
+
+#addPhotoForm {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+#addPhotoForm label {
+    margin-top: 10px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    text-transform: lowercase;
+}
+
+#addPhotoForm input,
+#addPhotoForm textarea {
+    width: 100%;
+
+    border: 1px solid var(--border);
+
+    border-radius: 7px;
+
+    padding: 11px 12px;
+
+    background: #121013;
+
+    color: var(--text);
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+#addPhotoForm input:focus,
+#addPhotoForm textarea:focus {
+    outline: none;
+
+    background: #171417;
+
+    border-color: rgba(184, 107, 131, 0.65);
+
+    box-shadow:
+        0 0 0 3px rgba(184, 107, 131, 0.08);
+}
+
+#addPhotoForm textarea {
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+#addPhotoForm input::placeholder,
+#addPhotoForm textarea::placeholder {
+    color: #696168;
+}
+
+/* ==========================
+   SALVAR
+========================== */
+
+.save-button {
+    margin-top: 17px;
+
+    padding: 12px;
+
+    border: none;
+    border-radius: 7px;
+
+    background: var(--accent);
+
+    color: white;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.save-button:hover {
+    background: #a85f77;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 20px rgba(184, 107, 131, 0.2);
+}
+
+.save-button:active {
+    transform: translateY(0);
+}
+
+/* ==========================
+   BACKDROP
+========================== */
+
+.modal-backdrop.show {
+    opacity: 0.84;
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media (max-width: 700px) {
+
+    main {
+        padding:
+            28px
+            14px
+            70px;
+    }
+
+    .top {
+        margin-bottom: 27px;
+
+        align-items: flex-start;
+    }
+
+    .top h1 {
+        font-size: 25px;
+    }
+
+    #contador {
+        max-width: 280px;
+
+        font-size: 11px;
+
+        line-height: 1.6;
+    }
+
+    .add-button {
+        width: 38px;
+        height: 38px;
+
+        font-size: 18px;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 8px;
+    }
+
+    .gallery-item {
+        border-radius: 4px;
+    }
+
+    .modal-content > img {
+        max-height: 70vh;
+
+        border-radius: 6px 6px 0 0;
+    }
+
+    .navigation {
+        width: 36px;
+        height: 36px;
+    }
+
+    .previous {
+        left: 7px;
+    }
+
+    .next {
+        right: 7px;
+    }
+
+    .photo-info {
+        padding: 16px 17px 18px;
+    }
+
+    .add-modal {
+        margin: 10px;
+
+        padding: 20px;
+    }
+}
+
+/* ==========================
+   CELULARES PEQUENOS
+========================== */
+
+@media (max-width: 400px) {
+
+    main {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .gallery {
+        gap: 6px;
+    }
+
+    .top {
+        margin-bottom: 23px;
+    }
+
+    .top h1 {
+        font-size: 23px;
+    }
+
+    #contador {
+        font-size: 10px;
+    }
+}
+
+/* ==========================
+   REDUÇÃO DE MOVIMENTO
+========================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
