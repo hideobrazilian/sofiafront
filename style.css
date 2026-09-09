@@ -1,20 +1,26 @@
-:root {
-    --bg: #0f0e10;
-    --bg-soft: #151316;
-    --card: #19171a;
+/* =========================================================
+   NÓS — GALERIA
+   ========================================================= */
 
-    --text: #f3eef1;
+:root {
+    --bg: #0b0a0c;
+    --bg-soft: #121014;
+    --card: #171419;
+
+    --text: #f7f2f4;
     --muted: #958b91;
 
-    --accent: #b86b83;
-    --accent-light: #d99aaa;
+    --accent: #c87991;
+    --accent-light: #e2a5b5;
 
-    --border: rgba(255, 255, 255, 0.08);
+    --border: rgba(255, 255, 255, 0.07);
+
+    --radius: 14px;
 }
 
-/* ==========================
+/* =========================================================
    RESET
-========================== */
+   ========================================================= */
 
 * {
     box-sizing: border-box;
@@ -28,11 +34,17 @@ html {
 
 body {
     min-height: 100vh;
+
     background:
         radial-gradient(
-            circle at 50% -20%,
-            rgba(184, 107, 131, 0.07),
-            transparent 35%
+            circle at 50% -10%,
+            rgba(200, 121, 145, 0.13),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 100% 100%,
+            rgba(200, 121, 145, 0.04),
+            transparent 30%
         ),
         var(--bg);
 
@@ -45,11 +57,13 @@ body {
         "Segoe UI",
         Arial,
         sans-serif;
+
+    -webkit-font-smoothing: antialiased;
 }
 
-/* ==========================
+/* =========================================================
    CONTAINER
-========================== */
+   ========================================================= */
 
 main {
     width: 100%;
@@ -57,41 +71,58 @@ main {
 
     margin: 0 auto;
 
-    padding: 52px 34px 100px;
+    padding: 56px 34px 100px;
 }
 
-/* ==========================
+/* =========================================================
    TOPO
-========================== */
+   ========================================================= */
 
 .top {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
 
-    margin-bottom: 46px;
+    margin-bottom: 42px;
 }
 
 .top > div {
     display: flex;
     flex-direction: column;
-
-    gap: 7px;
+    gap: 10px;
 }
 
 /* título */
 
 .top h1 {
+    position: relative;
+
     margin: 0;
 
-    font-size: 29px;
+    font-size: 34px;
     line-height: 1;
 
     font-weight: 400;
-
-    letter-spacing: -1px;
+    letter-spacing: -1.5px;
 
     color: var(--text);
+}
+
+/* pequeno detalhe embaixo do título */
+
+.top h1::after {
+    content: "";
+
+    display: block;
+
+    width: 24px;
+    height: 2px;
+
+    margin-top: 9px;
+
+    border-radius: 10px;
+
+    background: var(--accent);
 }
 
 /* contador */
@@ -107,18 +138,25 @@ main {
     letter-spacing: 0.15px;
 }
 
-/* ==========================
+/* =========================================================
    BOTÃO +
-========================== */
+   ========================================================= */
 
 .add-button {
-    width: 42px;
-    height: 42px;
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
 
     border: 1px solid var(--border);
     border-radius: 50%;
 
-    background: rgba(255, 255, 255, 0.025);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.06),
+            rgba(255,255,255,0.015)
+        );
 
     color: var(--accent-light);
 
@@ -126,74 +164,114 @@ main {
     align-items: center;
     justify-content: center;
 
-    font-size: 20px;
+    font-size: 21px;
 
     cursor: pointer;
 
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+
     transition:
-        background 0.25s ease,
-        border-color 0.25s ease,
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+        transform 0.3s ease,
+        background 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
 .add-button:hover {
-    background: rgba(184, 107, 131, 0.12);
+    transform: rotate(90deg) scale(1.05);
 
-    border-color: rgba(217, 154, 170, 0.35);
+    background:
+        rgba(200, 121, 145, 0.14);
 
-    transform: rotate(90deg);
+    border-color:
+        rgba(226, 165, 181, 0.35);
 
     box-shadow:
-        0 8px 30px rgba(0, 0, 0, 0.25),
-        0 0 20px rgba(184, 107, 131, 0.08);
+        0 10px 35px rgba(0, 0, 0, 0.3),
+        0 0 25px rgba(200, 121, 145, 0.1);
 }
 
-/* ==========================
+.add-button:active {
+    transform: scale(0.94);
+}
+
+/* =========================================================
    GALERIA
-========================== */
+   ========================================================= */
 
 .gallery {
     display: grid;
 
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
 
-    gap: 16px;
+    gap: 18px;
 }
 
-/* cada foto */
+/* =========================================================
+   FOTO
+   ========================================================= */
 
 .gallery-item {
     position: relative;
 
     overflow: hidden;
 
-    border-radius: 7px;
+    border-radius: var(--radius);
 
     background: var(--bg-soft);
 
+    border: 1px solid rgba(255,255,255,0.045);
+
     cursor: pointer;
 
-    border: 1px solid rgba(255, 255, 255, 0.035);
-
     box-shadow:
-        0 4px 18px rgba(0, 0, 0, 0.18);
+        0 8px 30px rgba(0,0,0,0.18);
 
-    animation: photoAppear 0.5s ease both;
+    animation:
+        photoAppear 0.6s ease both;
 
     transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease,
-        border-color 0.3s ease;
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+}
+
+.gallery-item::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            to bottom,
+            transparent 65%,
+            rgba(0,0,0,0.12)
+        );
+
+    opacity: 0;
+
+    transition: opacity 0.35s ease;
 }
 
 .gallery-item:hover {
-    transform: translateY(-4px);
+    transform: translateY(-5px);
 
-    border-color: rgba(217, 154, 170, 0.18);
+    border-color:
+        rgba(226,165,181,0.2);
 
     box-shadow:
-        0 15px 35px rgba(0, 0, 0, 0.35);
+        0 18px 45px rgba(0,0,0,0.35);
+}
+
+.gallery-item:hover::after {
+    opacity: 1;
 }
 
 /* imagem */
@@ -202,41 +280,46 @@ main {
     display: block;
 
     width: 100%;
+
     aspect-ratio: 1 / 1;
 
     object-fit: cover;
 
     transition:
-        transform 0.5s ease,
-        opacity 0.3s ease;
+        transform 0.6s cubic-bezier(.2,.7,.2,1),
+        opacity 0.35s ease;
 }
 
 .gallery-item:hover img {
-    transform: scale(1.035);
+    transform: scale(1.045);
 
     opacity: 0.94;
 }
 
-/* animação das fotos */
+/* =========================================================
+   ANIMAÇÃO
+   ========================================================= */
 
 @keyframes photoAppear {
+
     from {
         opacity: 0;
-        transform: translateY(8px);
+        transform: translateY(15px);
     }
 
     to {
         opacity: 1;
         transform: translateY(0);
     }
+
 }
 
-/* ==========================
-   MODAL DA FOTO
-========================== */
+/* =========================================================
+   MODAL
+   ========================================================= */
 
 .modal-dialog {
-    max-width: 920px;
+    max-width: 940px;
 }
 
 .modal-content {
@@ -245,6 +328,11 @@ main {
     border: none;
 
     overflow: hidden;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,0.6);
 }
 
 /* imagem ampliada */
@@ -253,18 +341,19 @@ main {
     display: block;
 
     width: 100%;
+
     max-height: 76vh;
 
     object-fit: contain;
 
-    background: #080709;
+    background: #070608;
 
-    border-radius: 8px 8px 0 0;
+    border-radius: 14px 14px 0 0;
 }
 
-/* ==========================
-   BOTÃO FECHAR
-========================== */
+/* =========================================================
+   FECHAR
+   ========================================================= */
 
 .close-button {
     position: absolute;
@@ -272,13 +361,15 @@ main {
     top: 14px;
     right: 14px;
 
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
 
-    border: none;
+    border: 1px solid rgba(255,255,255,0.08);
+
     border-radius: 50%;
 
-    background: rgba(0, 0, 0, 0.55);
+    background:
+        rgba(0,0,0,0.5);
 
     color: white;
 
@@ -290,35 +381,37 @@ main {
 
     cursor: pointer;
 
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(12px);
 
     transition:
-        background 0.2s ease,
-        transform 0.2s ease;
+        background 0.25s ease,
+        transform 0.25s ease;
 }
 
 .close-button:hover {
     background: var(--accent);
 
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
-/* ==========================
+/* =========================================================
    NAVEGAÇÃO
-========================== */
+   ========================================================= */
 
 .navigation {
     position: absolute;
 
     top: 43%;
 
-    width: 44px;
-    height: 44px;
+    width: 46px;
+    height: 46px;
 
-    border: none;
+    border: 1px solid rgba(255,255,255,0.08);
+
     border-radius: 50%;
 
-    background: rgba(0, 0, 0, 0.45);
+    background:
+        rgba(0,0,0,0.48);
 
     color: white;
 
@@ -330,41 +423,48 @@ main {
 
     cursor: pointer;
 
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(12px);
 
     transition:
-        background 0.2s ease,
-        transform 0.2s ease;
+        background 0.25s ease,
+        transform 0.25s ease;
 }
 
 .navigation:hover {
     background: var(--accent);
 
-    transform: scale(1.06);
+    transform: scale(1.08);
 }
 
 .previous {
-    left: 14px;
+    left: 15px;
 }
 
 .next {
-    right: 14px;
+    right: 15px;
 }
 
-/* ==========================
-   INFORMAÇÕES DA FOTO
-========================== */
+/* =========================================================
+   INFORMAÇÕES
+   ========================================================= */
 
 .photo-info {
     position: relative;
 
-    background: var(--card);
+    background:
+        linear-gradient(
+            145deg,
+            #19161a,
+            #141215
+        );
 
-    padding: 18px 21px 20px;
+    padding: 19px 22px 21px;
 
-    border-top: 1px solid var(--border);
+    border-top:
+        1px solid var(--border);
 
-    border-radius: 0 0 8px 8px;
+    border-radius:
+        0 0 14px 14px;
 }
 
 .photo-info span {
@@ -376,40 +476,44 @@ main {
 
     font-size: 10px;
 
-    letter-spacing: 0.7px;
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
 }
 
-.photo-info p {
-    margin: 0;
+/* contador da foto */
+
+#modalCounter {
+    color: #756c72;
 }
 
 /* data */
 
 #modalDate {
-    margin-bottom: 7px;
+    margin-bottom: 8px;
 
     color: var(--accent-light);
 
     font-size: 12px;
 
-    letter-spacing: 0.2px;
+    letter-spacing: 0.3px;
 }
 
 /* mensagem */
 
 #modalDescription {
-    padding-right: 48px;
+    padding-right: 50px;
 
     color: var(--text);
 
     font-size: 14px;
 
-    line-height: 1.6;
+    line-height: 1.65;
 }
 
-/* ==========================
+/* =========================================================
    EXCLUIR
-========================== */
+   ========================================================= */
 
 .delete-button {
     position: absolute;
@@ -417,10 +521,11 @@ main {
     right: 17px;
     bottom: 17px;
 
-    width: 33px;
-    height: 33px;
+    width: 36px;
+    height: 36px;
 
     border: none;
+
     border-radius: 50%;
 
     background: transparent;
@@ -434,39 +539,54 @@ main {
     cursor: pointer;
 
     transition:
-        background 0.2s ease,
-        color 0.2s ease;
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
 }
 
 .delete-button:hover {
-    background: rgba(184, 107, 131, 0.13);
+    background:
+        rgba(200,121,145,0.13);
 
-    color: var(--accent-light);
+    color:
+        var(--accent-light);
+
+    transform: scale(1.05);
 }
 
-/* ==========================
+/* =========================================================
    MODAL ADICIONAR
-========================== */
+   ========================================================= */
 
 .add-modal {
-    background: var(--card);
+    background:
+        linear-gradient(
+            145deg,
+            #1b181c,
+            #141215
+        );
 
-    border: 1px solid var(--border);
+    border:
+        1px solid rgba(255,255,255,0.08);
 
-    border-radius: 13px;
+    border-radius: 16px;
 
-    padding: 25px;
+    padding: 27px;
 
     box-shadow:
-        0 25px 70px rgba(0, 0, 0, 0.55);
+        0 30px 90px rgba(0,0,0,0.6);
 }
+
+/* cabeçalho */
 
 .add-header {
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
-    margin-bottom: 23px;
+    margin-bottom: 25px;
 }
 
 .add-header h2 {
@@ -474,18 +594,18 @@ main {
 
     color: var(--text);
 
-    font-size: 21px;
+    font-size: 22px;
 
     font-weight: 400;
 
-    letter-spacing: -0.4px;
+    letter-spacing: -0.5px;
 }
 
 .add-header .close-button {
     position: static;
 
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
 
     background: transparent;
 
@@ -495,14 +615,16 @@ main {
 }
 
 .add-header .close-button:hover {
-    background: rgba(184, 107, 131, 0.12);
+    background:
+        rgba(200,121,145,0.12);
 
-    color: var(--accent-light);
+    color:
+        var(--accent-light);
 }
 
-/* ==========================
+/* =========================================================
    FORMULÁRIO
-========================== */
+   ========================================================= */
 
 #addPhotoForm {
     display: flex;
@@ -513,11 +635,13 @@ main {
 }
 
 #addPhotoForm label {
-    margin-top: 10px;
+    margin-top: 11px;
 
     color: var(--muted);
 
     font-size: 11px;
+
+    letter-spacing: 0.3px;
 
     text-transform: lowercase;
 }
@@ -526,13 +650,15 @@ main {
 #addPhotoForm textarea {
     width: 100%;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid var(--border);
 
-    border-radius: 7px;
+    border-radius: 9px;
 
-    padding: 11px 12px;
+    padding: 12px 13px;
 
-    background: #121013;
+    background:
+        rgba(8,7,9,0.65);
 
     color: var(--text);
 
@@ -541,25 +667,28 @@ main {
     font-size: 14px;
 
     transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease;
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
 }
 
 #addPhotoForm input:focus,
 #addPhotoForm textarea:focus {
     outline: none;
 
-    background: #171417;
+    background:
+        rgba(20,17,20,0.9);
 
-    border-color: rgba(184, 107, 131, 0.65);
+    border-color:
+        rgba(200,121,145,0.65);
 
     box-shadow:
-        0 0 0 3px rgba(184, 107, 131, 0.08);
+        0 0 0 3px
+        rgba(200,121,145,0.09);
 }
 
 #addPhotoForm textarea {
-    min-height: 100px;
+    min-height: 105px;
 
     resize: vertical;
 }
@@ -569,19 +698,25 @@ main {
     color: #696168;
 }
 
-/* ==========================
-   SALVAR
-========================== */
+/* =========================================================
+   BOTÃO SALVAR
+   ========================================================= */
 
 .save-button {
-    margin-top: 17px;
+    margin-top: 18px;
 
-    padding: 12px;
+    padding: 13px;
 
     border: none;
-    border-radius: 7px;
 
-    background: var(--accent);
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent),
+            #b7657e
+        );
 
     color: white;
 
@@ -589,54 +724,57 @@ main {
 
     cursor: pointer;
 
+    box-shadow:
+        0 8px 25px
+        rgba(184,107,131,0.16);
+
     transition:
-        background 0.2s ease,
         transform 0.2s ease,
-        box-shadow 0.2s ease;
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
 }
 
 .save-button:hover {
-    background: #a85f77;
+    transform: translateY(-2px);
 
-    transform: translateY(-1px);
+    filter: brightness(1.06);
 
     box-shadow:
-        0 7px 20px rgba(184, 107, 131, 0.2);
+        0 12px 30px
+        rgba(184,107,131,0.24);
 }
 
 .save-button:active {
     transform: translateY(0);
 }
 
-/* ==========================
+/* =========================================================
    BACKDROP
-========================== */
+   ========================================================= */
 
 .modal-backdrop.show {
-    opacity: 0.84;
+    opacity: 0.86;
 }
 
-/* ==========================
+/* =========================================================
    MOBILE
-========================== */
+   ========================================================= */
 
 @media (max-width: 700px) {
 
     main {
         padding:
-            28px
+            30px
             14px
             70px;
     }
 
     .top {
-        margin-bottom: 27px;
-
-        align-items: flex-start;
+        margin-bottom: 30px;
     }
 
     .top h1 {
-        font-size: 25px;
+        font-size: 28px;
     }
 
     #contador {
@@ -648,31 +786,33 @@ main {
     }
 
     .add-button {
-        width: 38px;
-        height: 38px;
+        width: 40px;
+        height: 40px;
 
         font-size: 18px;
     }
 
     .gallery {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
 
-        gap: 8px;
+        gap: 9px;
     }
 
     .gallery-item {
-        border-radius: 4px;
+        border-radius: 9px;
     }
 
     .modal-content > img {
         max-height: 70vh;
 
-        border-radius: 6px 6px 0 0;
+        border-radius:
+            8px 8px 0 0;
     }
 
     .navigation {
-        width: 36px;
-        height: 36px;
+        width: 38px;
+        height: 38px;
     }
 
     .previous {
@@ -684,19 +824,22 @@ main {
     }
 
     .photo-info {
-        padding: 16px 17px 18px;
+        padding:
+            16px
+            17px
+            18px;
     }
 
     .add-modal {
         margin: 10px;
 
-        padding: 20px;
+        padding: 21px;
     }
 }
 
-/* ==========================
+/* =========================================================
    CELULARES PEQUENOS
-========================== */
+   ========================================================= */
 
 @media (max-width: 400px) {
 
@@ -710,21 +853,22 @@ main {
     }
 
     .top {
-        margin-bottom: 23px;
+        margin-bottom: 25px;
     }
 
     .top h1 {
-        font-size: 23px;
+        font-size: 25px;
     }
 
     #contador {
         font-size: 10px;
     }
+
 }
 
-/* ==========================
+/* =========================================================
    REDUÇÃO DE MOVIMENTO
-========================== */
+   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
 
@@ -733,7 +877,10 @@ main {
     *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
+
         scroll-behavior: auto !important;
+
         transition-duration: 0.01ms !important;
     }
+
 }
