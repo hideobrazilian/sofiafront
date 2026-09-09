@@ -1198,3 +1198,9 @@ textarea::placeholder {
     text-transform: uppercase;
     letter-spacing: 1px;
 }
+.day-1-btn.added-by,
+.day-2-btn.added-by {
+    background: rgba(200, 121, 145, 0.15);
+    border-color: var(--accent);
+    color: var(--accent-light);
+}
