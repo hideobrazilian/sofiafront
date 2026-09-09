@@ -35,11 +35,34 @@
         </p>
     </div>
 
+    <section class="music-section" id="musicSection">
+
+    <div class="section-title">
+        <span>música do dia</span>
+        <button id="manageMusicBtn" class="music-manage-btn">
+            <i class="bi bi-three-dots"></i>
+        </button>
+    </div>
+
+    <div id="dailyMusic" class="daily-music">
+        <div class="music-empty">
+            <i class="bi bi-music-note"></i>
+            <span>nenhuma música por enquanto</span>
+        </div>
+    </div>
+
+</section>
+
     <button id="addPhotoBtn" class="add-button">
         <i class="bi bi-plus"></i>
     </button>
 
-    <input type="file" id="photoInput" accept="image/*" hidden>
+    <input
+    type="file"
+    id="addImage"
+    accept="image/*"
+    required
+>
 
 </header>
 
@@ -47,6 +70,192 @@
 
     </main>
 
+    <!-- MODAL ADICIONAR MÚSICA -->
+
+<div
+    class="modal fade"
+    id="addMusicModal"
+    tabindex="-1"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content add-modal">
+
+            <div class="add-header">
+
+                <h2>adicionar música</h2>
+
+                <button
+                    type="button"
+                    class="close-button"
+                    data-bs-dismiss="modal"
+                >
+                    <i class="bi bi-x"></i>
+                </button>
+
+            </div>
+
+            <form id="addMusicForm">
+
+                <label for="musicTitle">
+                    música
+                </label>
+
+                <input
+                    type="text"
+                    id="musicTitle"
+                    placeholder="nome da música"
+                    required
+                >
+
+                <label for="musicArtist">
+                    artista
+                </label>
+
+                <input
+                    type="text"
+                    id="musicArtist"
+                    placeholder="nome do artista"
+                    required
+                >
+
+                <label for="musicMessage">
+                    mensagem
+                </label>
+
+                <textarea
+                    id="musicMessage"
+                    rows="3"
+                    placeholder="escreva alguma coisa..."
+                ></textarea>
+
+                <label for="musicYoutube">
+                    YouTube Music
+                </label>
+
+                <input
+                    type="url"
+                    id="musicYoutube"
+                    placeholder="https://music.youtube.com/..."
+                >
+
+                <label for="musicSpotify">
+                    Spotify
+                </label>
+
+                <input
+                    type="url"
+                    id="musicSpotify"
+                    placeholder="https://open.spotify.com/..."
+                >
+
+                <button
+                    type="submit"
+                    class="save-button"
+                >
+                    salvar música
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+    <!-- MODAL ESCOLHER MÚSICA -->
+
+<div
+    class="modal fade"
+    id="musicListModal"
+    tabindex="-1"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content music-modal">
+
+            <div class="add-header">
+                <h2>músicas</h2>
+
+                <button
+                    type="button"
+                    class="close-button"
+                    data-bs-dismiss="modal"
+                >
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+
+            <div id="musicList" class="music-list"></div>
+
+            <button
+                id="addMusicBtn"
+                class="save-button"
+                type="button"
+            >
+                <i class="bi bi-plus"></i>
+                adicionar música
+            </button>
+
+        </div>
+    </div>
+</div>
+    <!-- MODAL MÚSICA -->
+
+<div
+    class="modal fade"
+    id="musicModal"
+    tabindex="-1"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content music-modal">
+
+            <button
+                type="button"
+                class="close-button"
+                data-bs-dismiss="modal"
+            >
+                <i class="bi bi-x"></i>
+            </button>
+
+            <div class="music-icon">
+                <i class="bi bi-music-note"></i>
+            </div>
+
+            <h2 id="musicModalTitle">Something</h2>
+
+            <p id="musicModalArtist">
+                The Beatles
+            </p>
+
+            <p id="musicModalMessage"></p>
+
+            <div class="music-links">
+
+                <a
+                    id="youtubeButton"
+                    href="#"
+                    target="_blank"
+                    class="music-link youtube"
+                >
+                    <i class="bi bi-youtube"></i>
+                    YouTube Music
+                </a>
+
+                <a
+                    id="spotifyButton"
+                    href="#"
+                    target="_blank"
+                    class="music-link spotify"
+                >
+                    <i class="bi bi-spotify"></i>
+                    Spotify
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+</div>
 
     <!-- MODAL DA FOTO -->
 
