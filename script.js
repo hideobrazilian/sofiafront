@@ -371,8 +371,8 @@ function createDailyMusic() {
 
             const nome =
                 musica.escolhida_por === "voce"
-                    ? "sua escolha"
-                    : "escolha dela";
+                    ? "Isaac"
+                    : "Sofia";
 
             return `
                 <div
@@ -436,8 +436,8 @@ function openMusic(musica) {
 
     musicModalChosenBy.textContent =
         musica.escolhida_por === "voce"
-            ? "sua escolha"
-            : "escolha dela";
+            ? "Isaac"
+            : "Sofia";
 
     if (musica.youtube_url) {
         youtubeButton.href = musica.youtube_url;
@@ -487,11 +487,11 @@ function createMusicList() {
 
         const suaEscolha =
             musica.musica_do_dia &&
-            musica.escolhida_por === "voce";
+            musica.escolhida_por === "Isaac";
 
         const escolhaDela =
             musica.musica_do_dia &&
-            musica.escolhida_por === "ela";
+            musica.escolhida_por === "Sofia";
 
 
         const item = document.createElement("div");
