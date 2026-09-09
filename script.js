@@ -294,6 +294,7 @@ const musicSpotify = document.getElementById("musicSpotify");
 const musicModalTitle = document.getElementById("musicModalTitle");
 const musicModalArtist = document.getElementById("musicModalArtist");
 const musicModalMessage = document.getElementById("musicModalMessage");
+const musicModalChosenBy = document.getElementById("musicModalChosenBy");
 
 const youtubeButton = document.getElementById("youtubeButton");
 const spotifyButton = document.getElementById("spotifyButton");
@@ -340,38 +341,69 @@ async function loadMusicas() {
 // ==========================
 
 function createDailyMusic() {
+
     const musicasDoDia = musicas
         .filter(musica => musica.musica_do_dia)
-        .sort((a, b) => a.ordem_dia - b.ordem_dia);
+        .sort((a, b) => {
+
+            if (a.escolhida_por === "voce") return -1;
+            if (b.escolhida_por === "voce") return 1;
+
+            return 0;
+        });
+
 
     if (!musicasDoDia.length) {
+
         dailyMusic.innerHTML = `
             <div class="music-empty">
                 <i class="bi bi-music-note"></i>
                 <span>nenhuma música por enquanto</span>
             </div>
         `;
+
         return;
     }
 
+
     dailyMusic.innerHTML = musicasDoDia
-        .map(musica => `
-            <div class="music-note" data-id="${musica.id}">
-                
-                <div class="music-note-icon">
-                    <i class="bi bi-music-note"></i>
+        .map(musica => {
+
+            const nome =
+                musica.escolhida_por === "voce"
+                    ? "sua escolha"
+                    : "escolha dela";
+
+            return `
+                <div
+                    class="music-note"
+                    data-id="${musica.id}"
+                >
+
+                    <div class="music-note-icon">
+                        <i class="bi bi-music-note"></i>
+                    </div>
+
+                    <div class="music-note-info">
+
+                        <strong>
+                            ${escapeHTML(musica.titulo)}
+                        </strong>
+
+                        <span>
+                            ${escapeHTML(musica.artista)}
+                            · ${nome}
+                        </span>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right music-arrow"></i>
+
                 </div>
-
-                <div class="music-note-info">
-                    <strong>${escapeHTML(musica.titulo)}</strong>
-                    <span>${escapeHTML(musica.artista)}</span>
-                </div>
-
-                <i class="bi bi-chevron-right music-arrow"></i>
-
-            </div>
-        `)
+            `;
+        })
         .join("");
+
 
     dailyMusic
         .querySelectorAll(".music-note")
@@ -381,11 +413,12 @@ function createDailyMusic() {
                 musica => musica.id == item.dataset.id
             );
 
-            item.addEventListener("click", () => {
-                openMusic(musica);
-            });
+            item.addEventListener(
+                "click",
+                () => openMusic(musica)
+            );
         });
-}
+}   
 
 
 // ==========================
@@ -400,6 +433,11 @@ function openMusic(musica) {
     musicModalTitle.textContent = musica.titulo;
     musicModalArtist.textContent = musica.artista;
     musicModalMessage.textContent = musica.mensagem || "";
+
+    musicModalChosenBy.textContent =
+        musica.escolhida_por === "voce"
+            ? "sua escolha"
+            : "escolha dela";
 
     if (musica.youtube_url) {
         youtubeButton.href = musica.youtube_url;
@@ -416,7 +454,9 @@ function openMusic(musica) {
     }
 
     bootstrap.Modal
-        .getOrCreateInstance(document.getElementById("musicModal"))
+        .getOrCreateInstance(
+            document.getElementById("musicModal")
+        )
         .show();
 }
 
@@ -426,56 +466,78 @@ function openMusic(musica) {
 // ==========================
 
 function createMusicList() {
+
     musicList.innerHTML = "";
 
+
     if (!musicas.length) {
+
         musicList.innerHTML = `
             <div class="music-empty">
                 <i class="bi bi-music-note"></i>
                 <span>nenhuma música cadastrada</span>
             </div>
         `;
+
         return;
     }
 
+
     musicas.forEach(musica => {
+
+        const suaEscolha =
+            musica.musica_do_dia &&
+            musica.escolhida_por === "voce";
+
+        const escolhaDela =
+            musica.musica_do_dia &&
+            musica.escolhida_por === "ela";
+
+
         const item = document.createElement("div");
 
         item.className = "music-list-item";
 
-        const dia1 =
-            musica.musica_do_dia && musica.ordem_dia === 1;
-
-        const dia2 =
-            musica.musica_do_dia && musica.ordem_dia === 2;
 
         item.innerHTML = `
+
             <div class="music-note-icon">
                 <i class="bi bi-music-note"></i>
             </div>
 
+
             <div class="music-list-item-info">
-                <strong>${escapeHTML(musica.titulo)}</strong>
-                <span>${escapeHTML(musica.artista)}</span>
+
+                <strong>
+                    ${escapeHTML(musica.titulo)}
+                </strong>
+
+                <span>
+                    ${escapeHTML(musica.artista)}
+                </span>
+
             </div>
+
 
             <div class="music-list-actions">
 
                 <button
                     type="button"
                     class="day-1-btn"
-                    ${dia1 ? "disabled" : ""}
+                    ${suaEscolha ? "disabled" : ""}
                 >
-                    ${dia1 ? "dia 1 ✓" : "dia 1"}
+                    ${suaEscolha ? "você ✓" : "você"}
                 </button>
+
 
                 <button
                     type="button"
                     class="day-2-btn"
-                    ${dia2 ? "disabled" : ""}
+                    ${escolhaDela ? "disabled" : ""}
                 >
-                    ${dia2 ? "dia 2 ✓" : "dia 2"}
+                    ${escolhaDela ? "ela ✓" : "ela"}
                 </button>
+
 
                 <button
                     type="button"
@@ -487,20 +549,30 @@ function createMusicList() {
             </div>
         `;
 
-        item.querySelector(".day-1-btn")
-            .addEventListener("click", () => {
-                setMusicOfDay(musica.id, 1);
-            });
 
-        item.querySelector(".day-2-btn")
-            .addEventListener("click", () => {
-                setMusicOfDay(musica.id, 2);
-            });
+        item
+            .querySelector(".day-1-btn")
+            .addEventListener(
+                "click",
+                () => setMusicOfDay(musica.id, "voce")
+            );
 
-        item.querySelector(".edit-music-btn")
-            .addEventListener("click", () => {
-                openEditMusic(musica);
-            });
+
+        item
+            .querySelector(".day-2-btn")
+            .addEventListener(
+                "click",
+                () => setMusicOfDay(musica.id, "ela")
+            );
+
+
+        item
+            .querySelector(".edit-music-btn")
+            .addEventListener(
+                "click",
+                () => openEditMusic(musica)
+            );
+
 
         musicList.appendChild(item);
     });
@@ -511,32 +583,43 @@ function createMusicList() {
 // DEFINIR MÚSICA DO DIA
 // ==========================
 
-async function setMusicOfDay(id, ordem) {
+async function setMusicOfDay(id, pessoa) {
+
     try {
+
         const response = await fetch(
             `${MUSIC_API}/${id}/dia`,
             {
                 method: "PUT",
+
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ ordem })
+
+                body: JSON.stringify({
+                    pessoa
+                })
             }
         );
 
-        if (!response.ok) {
-            const resultado = await response.json();
 
+        const resultado = await response.json();
+
+
+        if (!response.ok) {
             throw new Error(
                 resultado.erro ||
                 "Erro ao definir música do dia."
             );
         }
 
+
         await loadMusicas();
 
     } catch (error) {
+
         console.error(error);
+
         alert(error.message);
     }
 }

@@ -1190,3 +1190,11 @@ textarea::placeholder {
     }
 
 }
+.music-chosen-by {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
