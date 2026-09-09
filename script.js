@@ -296,6 +296,8 @@ const musicModalArtist = document.getElementById("musicModalArtist");
 const musicModalMessage = document.getElementById("musicModalMessage");
 const musicModalChosenBy = document.getElementById("musicModalChosenBy");
 
+const musicAddedBy = document.getElementById("musicAddedBy");
+
 const youtubeButton = document.getElementById("youtubeButton");
 const spotifyButton = document.getElementById("spotifyButton");
 
@@ -633,12 +635,13 @@ addMusicForm.addEventListener("submit", async event => {
     event.preventDefault();
 
     const dados = {
-        titulo: musicTitle.value.trim(),
-        artista: musicArtist.value.trim(),
-        mensagem: musicMessage.value.trim(),
-        youtube_url: musicYoutube.value.trim(),
-        spotify_url: musicSpotify.value.trim()
-    };
+    titulo: musicTitle.value.trim(),
+    artista: musicArtist.value.trim(),
+    mensagem: musicMessage.value.trim(),
+    youtube_url: musicYoutube.value.trim(),
+    spotify_url: musicSpotify.value.trim(),
+    adicionada_por: musicAddedBy.value
+};
 
     try {
         const response = await fetch(MUSIC_API, {
