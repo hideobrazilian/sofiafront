@@ -525,16 +525,15 @@ function createMusicList() {
 
                 <button
                     type="button"
-                    class="day-1-btn"
+                    class="day-1-btn ${musica.adicionada_por === "voce" ? "added-by" : ""}"
                     ${suaEscolha ? "disabled" : ""}
                 >
                     ${suaEscolha ? "você ✓" : "você"}
                 </button>
 
-
                 <button
                     type="button"
-                    class="day-2-btn"
+                    class="day-2-btn ${musica.adicionada_por === "ela" ? "added-by" : ""}"
                     ${escolhaDela ? "disabled" : ""}
                 >
                     ${escolhaDela ? "ela ✓" : "ela"}
