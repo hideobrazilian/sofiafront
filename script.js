@@ -207,32 +207,42 @@ addPhotoForm.addEventListener("submit", async event => {
     formData.append("mensagem", addMessage.value);
 
     try {
-        const response = await fetch(API_URL, {
-            method: "POST",
-            body: formData
-        });
+    alert("Enviando foto...");
 
-        const resultado = await response.json();
+    const response = await fetch(API_URL, {
+        method: "POST",
+        body: formData
+    });
 
-        if (!response.ok) {
-            throw new Error(
-                resultado.erro || "Erro ao adicionar foto."
-            );
-        }
+    alert("Servidor respondeu: " + response.status);
 
-        addPhotoForm.reset();
+    const resultado = await response.json();
 
-        bootstrap.Modal
-            .getInstance(document.getElementById("addModal"))
-            ?.hide();
-
-        await loadPhotos();
-
-    } catch (error) {
-        console.error(error);
-        alert(error.message);
+    if (!response.ok) {
+        throw new Error(
+            resultado.erro || "Erro ao adicionar foto."
+        );
     }
-});
+
+    alert("Foto salva!");
+
+    addPhotoForm.reset();
+
+    bootstrap.Modal
+        .getInstance(document.getElementById("addModal"))
+        ?.hide();
+
+    await loadPhotos();
+
+} catch (error) {
+    console.error("Erro:", error);
+
+    alert(
+        "FALHA NO UPLOAD\n\n" +
+        "Tipo: " + error.name +
+        "\nMensagem: " + error.message
+    );
+}
 
 
 // ==========================
