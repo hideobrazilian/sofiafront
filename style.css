@@ -684,3 +684,17 @@ textarea::placeholder {
         scroll-behavior: auto !important;
     }
 }
+.edit-music-btn {
+    padding: 7px 10px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--muted);
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.edit-music-btn:hover {
+    background: var(--card);
+    color: var(--text);
+}

@@ -52,7 +52,16 @@ const youtubeButton =
 
 const spotifyButton =
     document.getElementById("spotifyButton");
+const editMusicModal = document.getElementById("editMusicModal");
+const editMusicForm = document.getElementById("editMusicForm");
 
+const editMusicTitle = document.getElementById("editMusicTitle");
+const editMusicArtist = document.getElementById("editMusicArtist");
+const editMusicMessage = document.getElementById("editMusicMessage");
+const editMusicYoutube = document.getElementById("editMusicYoutube");
+const editMusicSpotify = document.getElementById("editMusicSpotify");
+
+let musicaEditando = null;
 let musicas = [];
 let musicaAtual = null;
 
@@ -622,71 +631,44 @@ function openMusic(musica) {
 }
 
 function createMusicList() {
-
     musicList.innerHTML = "";
 
     if (musicas.length === 0) {
-
         musicList.innerHTML = `
-            <p class="music-empty">
-                nenhuma música cadastrada
-            </p>
+            <div class="music-empty">
+                <i class="bi bi-music-note"></i>
+                <span>nenhuma música cadastrada</span>
+            </div>
         `;
-
         return;
     }
 
     musicas.forEach(musica => {
-
-        const item =
-            document.createElement("div");
-
+        const item = document.createElement("div");
         item.className = "music-list-item";
 
         item.innerHTML = `
-
-            <div class="music-list-info">
-
-                <strong>
-                    ${escapeHTML(musica.titulo)}
-                </strong>
-
-                <span>
-                    ${escapeHTML(musica.artista)}
-                </span>
-
+            <div class="music-note-icon">
+                <i class="bi bi-music-note"></i>
             </div>
 
-            <button
-                class="choose-music"
-                data-id="${musica.id}"
-            >
-                ${musica.musica_do_dia
-                    ? "atual"
-                    : "usar"}
-            </button>
+            <div class="music-list-item-info">
+                <strong>${escapeHTML(musica.titulo)}</strong>
+                <span>${escapeHTML(musica.artista)}</span>
+            </div>
 
+            <button type="button" class="edit-music-btn">
+                editar
+            </button>
         `;
 
-        const button =
-            item.querySelector(".choose-music");
-
-        if (!musica.musica_do_dia) {
-
-            button.addEventListener(
-                "click",
-                () => setMusicOfDay(musica.id)
-            );
-
-        } else {
-
-            button.disabled = true;
-        }
+        item.querySelector(".edit-music-btn").addEventListener("click", () => {
+            openEditMusic(musica);
+        });
 
         musicList.appendChild(item);
     });
 }
-
 async function setMusicOfDay(id) {
 
     try {
@@ -832,5 +814,68 @@ function escapeHTML(text) {
 
     return div.innerHTML;
 }
+function openEditMusic(musica) {
+    musicaEditando = musica;
+
+    editMusicTitle.value = musica.titulo || "";
+    editMusicArtist.value = musica.artista || "";
+    editMusicMessage.value = musica.mensagem || "";
+    editMusicYoutube.value = musica.youtube_url || "";
+    editMusicSpotify.value = musica.spotify_url || "";
+
+    const listaModal = bootstrap.Modal.getInstance(
+        document.getElementById("musicListModal")
+    );
+
+    if (listaModal) {
+        listaModal.hide();
+    }
+
+    setTimeout(() => {
+        new bootstrap.Modal(editMusicModal).show();
+    }, 250);
+}
+editMusicForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!musicaEditando) return;
+
+    try {
+        const response = await fetch(
+            `${API_URL.replace("/fotos", "/musicas")}/${musicaEditando.id}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    titulo: editMusicTitle.value.trim(),
+                    artista: editMusicArtist.value.trim(),
+                    mensagem: editMusicMessage.value.trim(),
+                    youtube_url: editMusicYoutube.value.trim(),
+                    spotify_url: editMusicSpotify.value.trim()
+                })
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Erro ao editar música");
+        }
+
+        const modal = bootstrap.Modal.getInstance(editMusicModal);
+
+        if (modal) {
+            modal.hide();
+        }
+
+        musicaEditando = null;
+
+        await loadMusicas();
+
+    } catch (erro) {
+        console.error(erro);
+        alert("Não foi possível editar a música.");
+    }
+});
 
 loadMusicas();

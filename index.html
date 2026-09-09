@@ -65,6 +65,73 @@
     </main>
 
     <!-- MODAL ADICIONAR MÚSICA -->
+<div class="modal fade" id="editMusicModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content add-modal">
+
+            <div class="add-header">
+                <h2>editar música</h2>
+
+                <button
+                    type="button"
+                    class="close-button"
+                    data-bs-dismiss="modal"
+                >
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+
+            <form id="editMusicForm">
+
+                <label for="editMusicTitle">música</label>
+                <input
+                    type="text"
+                    id="editMusicTitle"
+                    required
+                >
+
+                <label for="editMusicArtist">artista</label>
+                <input
+                    type="text"
+                    id="editMusicArtist"
+                    required
+                >
+
+                <label for="editMusicMessage">mensagem</label>
+                <textarea
+                    id="editMusicMessage"
+                    rows="3"
+                    placeholder="escreva alguma coisa..."
+                ></textarea>
+
+                <label for="editMusicYoutube">
+                    YouTube Music
+                </label>
+
+                <input
+                    type="url"
+                    id="editMusicYoutube"
+                    placeholder="https://music.youtube.com/..."
+                >
+
+                <label for="editMusicSpotify">
+                    Spotify
+                </label>
+
+                <input
+                    type="url"
+                    id="editMusicSpotify"
+                    placeholder="https://open.spotify.com/..."
+                >
+
+                <button type="submit" class="save-button">
+                    salvar alterações
+                </button>
+
+            </form>
+        </div>
+    </div>
+</div>
 
 <div
     class="modal fade"
