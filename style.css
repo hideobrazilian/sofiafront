@@ -825,3 +825,368 @@ textarea::placeholder {
         scroll-behavior: auto !important;
     }
 }
+/* =========================
+   EDITAR / ADICIONAR MÚSICA
+========================= */
+
+#editMusicForm,
+#addMusicForm {
+    gap: 6px;
+}
+
+#editMusicForm label,
+#addMusicForm label {
+    margin-top: 14px;
+    margin-bottom: 2px;
+    padding-left: 2px;
+    color: #aaa0a6;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .2px;
+}
+
+#editMusicForm input,
+#editMusicForm textarea,
+#addMusicForm input,
+#addMusicForm textarea {
+    min-height: 45px;
+    padding: 12px 13px;
+
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 11px;
+
+    background: #100e11;
+    color: #f7f2f4;
+
+    font-size: 13px;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .02);
+
+    transition:
+        border-color .2s,
+        background .2s,
+        box-shadow .2s,
+        transform .2s;
+}
+
+#editMusicForm textarea,
+#addMusicForm textarea {
+    min-height: 100px;
+    line-height: 1.5;
+}
+
+#editMusicForm input:hover,
+#editMusicForm textarea:hover,
+#addMusicForm input:hover,
+#addMusicForm textarea:hover {
+    border-color: rgba(255, 255, 255, .13);
+    background: #121014;
+}
+
+#editMusicForm input:focus,
+#editMusicForm textarea:focus,
+#addMusicForm input:focus,
+#addMusicForm textarea:focus {
+    border-color: rgba(200, 121, 145, .65);
+
+    background: #121014;
+
+    box-shadow:
+        0 0 0 3px rgba(200, 121, 145, .08),
+        0 6px 20px rgba(0, 0, 0, .15);
+
+    transform: translateY(-1px);
+}
+
+#editMusicForm input::placeholder,
+#editMusicForm textarea::placeholder,
+#addMusicForm input::placeholder,
+#addMusicForm textarea::placeholder {
+    color: #5f585d;
+}
+
+/* URLS */
+
+#editMusicYoutube,
+#editMusicSpotify,
+#musicYoutube,
+#musicSpotify {
+    font-size: 12px;
+}
+
+/* BOTÃO SALVAR */
+
+#editMusicForm .save-button,
+#addMusicForm .save-button {
+    margin-top: 20px;
+    min-height: 46px;
+
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 11px;
+
+    background: #f1ebed;
+    color: #100e11;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition:
+        transform .15s,
+        opacity .15s,
+        box-shadow .2s;
+}
+
+#editMusicForm .save-button:hover,
+#addMusicForm .save-button:hover {
+    opacity: 1;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, .25);
+
+    transform: translateY(-1px);
+}
+
+#editMusicForm .save-button:active,
+#addMusicForm .save-button:active {
+    transform: scale(.98);
+}
+
+
+/* =========================
+   MODAL DA MÚSICA
+========================= */
+
+#musicModal .modal-dialog {
+    max-width: 430px;
+}
+
+#musicModal .music-modal {
+    position: relative;
+
+    padding: 34px 26px 27px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% -20%,
+            rgba(200, 121, 145, .18),
+            transparent 45%
+        ),
+        #151216;
+
+    border: 1px solid rgba(255, 255, 255, .07);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 30px 90px rgba(0, 0, 0, .65);
+}
+
+/* brilho discreto no topo */
+
+#musicModal .music-modal::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    width: 100px;
+    height: 2px;
+
+    transform: translateX(-50%);
+
+    background: var(--accent);
+
+    opacity: .8;
+}
+
+
+/* BOTÃO FECHAR */
+
+#musicModal .close-button {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    z-index: 2;
+
+    background: rgba(0, 0, 0, .28);
+}
+
+
+/* ÍCONE */
+
+#musicModal .music-icon {
+    width: 72px;
+    height: 72px;
+
+    margin: 5px auto 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(200, 121, 145, .2),
+            rgba(200, 121, 145, .06)
+        );
+
+    border: 1px solid rgba(226, 165, 181, .12);
+
+    color: var(--accent-light);
+
+    font-size: 32px;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, .2);
+}
+
+
+/* TÍTULO */
+
+#musicModalTitle {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: 23px;
+    font-weight: 500;
+
+    line-height: 1.25;
+
+    text-align: center;
+
+    letter-spacing: -.4px;
+}
+
+
+/* ARTISTA */
+
+#musicModalArtist {
+    margin: 7px 0 0;
+
+    color: var(--accent-light);
+
+    font-size: 13px;
+
+    text-align: center;
+}
+
+
+/* MENSAGEM */
+
+#musicModalMessage {
+    margin: 22px auto 0;
+    max-width: 330px;
+
+    color: #aaa1a6;
+
+    font-size: 13px;
+    line-height: 1.7;
+
+    text-align: center;
+}
+
+#musicModalMessage:empty {
+    display: none;
+}
+
+
+/* =========================
+   BOTÕES DOS APPS
+========================= */
+
+#musicModal .music-links {
+    margin-top: 25px;
+    gap: 9px;
+}
+
+#musicModal .music-link {
+    min-height: 48px;
+
+    border: 1px solid rgba(255, 255, 255, .07);
+    border-radius: 11px;
+
+    background: #100e11;
+
+    color: var(--text);
+
+    font-size: 13px;
+    font-weight: 500;
+
+    transition:
+        transform .15s,
+        background .2s,
+        border-color .2s;
+}
+
+#musicModal .music-link:hover {
+    color: var(--text);
+
+    background: #1b181c;
+
+    border-color: rgba(255, 255, 255, .12);
+
+    transform: translateY(-2px);
+}
+
+#musicModal .music-link:active {
+    transform: scale(.98);
+}
+
+#musicModal .music-link i {
+    font-size: 17px;
+}
+
+
+/* YOUTUBE */
+
+#musicModal .music-link.youtube:hover {
+    border-color: rgba(255, 255, 255, .16);
+}
+
+
+/* SPOTIFY */
+
+#musicModal .music-link.spotify:hover {
+    border-color: rgba(255, 255, 255, .16);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 500px) {
+
+    #musicModal .music-modal {
+        margin: 12px;
+        padding: 31px 20px 22px;
+        border-radius: 16px;
+    }
+
+    #musicModal .music-icon {
+        width: 66px;
+        height: 66px;
+
+        margin-bottom: 19px;
+
+        font-size: 29px;
+    }
+
+    #musicModalTitle {
+        font-size: 21px;
+    }
+
+    #musicModalMessage {
+        font-size: 12px;
+    }
+
+}
