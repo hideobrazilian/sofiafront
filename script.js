@@ -806,20 +806,23 @@ manageMusicBtn.addEventListener(
 );
 
 
-addMusicBtn.addEventListener(
-    "click",
-    () => {
+addMusicBtn.addEventListener("click", () => {
+    const listaModal = bootstrap.Modal.getInstance(
+        document.getElementById("musicListModal")
+    );
 
-        const modal =
-            bootstrap.Modal.getOrCreateInstance(
-                document.getElementById(
-                    "addMusicModal"
-                )
-            );
-
-        modal.show();
+    if (listaModal) {
+        listaModal.hide();
     }
-);
+
+    setTimeout(() => {
+        const adicionarModal = new bootstrap.Modal(
+            document.getElementById("addMusicModal")
+        );
+
+        adicionarModal.show();
+    }, 250);
+});
 function escapeHTML(text) {
 
     const div =

@@ -1,26 +1,14 @@
-/* =========================================================
-   NÓS — GALERIA
-   ========================================================= */
-
 :root {
     --bg: #0b0a0c;
     --bg-soft: #121014;
     --card: #171419;
-
     --text: #f7f2f4;
     --muted: #958b91;
-
     --accent: #c87991;
     --accent-light: #e2a5b5;
-
-    --border: rgba(255, 255, 255, 0.07);
-
+    --border: rgba(255,255,255,.07);
     --radius: 14px;
 }
-
-/* =========================================================
-   RESET
-   ========================================================= */
 
 * {
     box-sizing: border-box;
@@ -34,56 +22,29 @@ html {
 
 body {
     min-height: 100vh;
-
     background:
-        radial-gradient(
-            circle at 50% -10%,
-            rgba(200, 121, 145, 0.13),
-            transparent 32%
-        ),
-        radial-gradient(
-            circle at 100% 100%,
-            rgba(200, 121, 145, 0.04),
-            transparent 30%
-        ),
+        radial-gradient(circle at 50% -10%, rgba(200,121,145,.13), transparent 32%),
         var(--bg);
-
     color: var(--text);
-
-    font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        sans-serif;
-
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
-
-/* =========================================================
-   CONTAINER
-   ========================================================= */
 
 main {
     width: 100%;
     max-width: 1180px;
-
-    margin: 0 auto;
-
+    margin: auto;
     padding: 56px 34px 100px;
 }
 
-/* =========================================================
-   TOPO
-   ========================================================= */
+
+/* TOPO */
 
 .top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    margin-bottom: 42px;
+    margin-bottom: 28px;
 }
 
 .top > div {
@@ -92,348 +53,538 @@ main {
     gap: 10px;
 }
 
-/* título */
-
 .top h1 {
-    position: relative;
-
-    margin: 0;
-
     font-size: 34px;
     line-height: 1;
-
     font-weight: 400;
     letter-spacing: -1.5px;
-
-    color: var(--text);
 }
-
-/* pequeno detalhe embaixo do título */
 
 .top h1::after {
     content: "";
-
     display: block;
-
     width: 24px;
     height: 2px;
-
     margin-top: 9px;
-
     border-radius: 10px;
-
     background: var(--accent);
 }
 
-/* contador */
-
 #contador {
-    margin: 0;
-
     color: var(--muted);
-
     font-size: 12px;
     line-height: 1.5;
-
-    letter-spacing: 0.15px;
 }
 
-/* =========================================================
-   BOTÃO +
-   ========================================================= */
 
-.add-button {
-    width: 46px;
-    height: 46px;
+/* BOTÕES */
 
-    flex-shrink: 0;
-
-    border: 1px solid var(--border);
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,0.06),
-            rgba(255,255,255,0.015)
-        );
-
-    color: var(--accent-light);
-
+.add-button,
+.music-manage-btn,
+.close-button,
+.navigation {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    font-size: 21px;
-
+    border: 0;
     cursor: pointer;
+}
 
-    box-shadow:
-        0 8px 30px rgba(0, 0, 0, 0.22),
-        inset 0 1px 0 rgba(255,255,255,0.04);
-
-    transition:
-        transform 0.3s ease,
-        background 0.3s ease,
-        border-color 0.3s ease,
-        box-shadow 0.3s ease;
+.add-button {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--text);
+    color: var(--bg);
+    font-size: 21px;
+    transition: transform .15s, opacity .15s;
 }
 
 .add-button:hover {
-    transform: rotate(90deg) scale(1.05);
-
-    background:
-        rgba(200, 121, 145, 0.14);
-
-    border-color:
-        rgba(226, 165, 181, 0.35);
-
-    box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.3),
-        0 0 25px rgba(200, 121, 145, 0.1);
+    background: var(--text);
+    color: var(--bg);
+    opacity: .82;
+    transform: scale(1.04);
 }
 
 .add-button:active {
-    transform: scale(0.94);
+    transform: scale(.94);
 }
 
-/* =========================================================
-   GALERIA
-   ========================================================= */
+
+/* MÚSICA */
+
+.music-section {
+    margin: 0 0 28px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 0 4px;
+}
+
+.section-title span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.music-manage-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+    background: var(--card);
+    color: var(--muted);
+    font-size: 15px;
+    transition: background .15s, color .15s;
+}
+
+.music-manage-btn:hover {
+    background: var(--bg-soft);
+    color: var(--text);
+}
+
+.music-note,
+.music-empty {
+    width: 100%;
+    border-radius: 15px;
+}
+
+.music-note {
+    min-height: 64px;
+    padding: 11px 13px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: transform .15s, border-color .15s;
+}
+
+.music-note:hover {
+    transform: translateY(-1px);
+    border-color: rgba(226,165,181,.15);
+}
+
+.music-note:active {
+    transform: scale(.985);
+}
+
+.music-note-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: rgba(200,121,145,.12);
+    color: var(--accent-light);
+    font-size: 19px;
+}
+
+.music-note-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.music-note-info strong,
+.music-note-info span {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.music-note-info strong {
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.music-note-info span {
+    margin-top: 3px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.music-arrow {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.music-empty {
+    min-height: 64px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px dashed var(--border);
+    color: var(--muted);
+    font-size: 12px;
+}
+
+
+/* GALERIA */
 
 .gallery {
     display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 18px;
 }
 
-/* =========================================================
-   FOTO
-   ========================================================= */
-
 .gallery-item {
-    position: relative;
-
     overflow: hidden;
-
+    position: relative;
     border-radius: var(--radius);
-
     background: var(--bg-soft);
-
-    border: 1px solid rgba(255,255,255,0.045);
-
+    border: 1px solid var(--border);
     cursor: pointer;
-
-    box-shadow:
-        0 8px 30px rgba(0,0,0,0.18);
-
-    animation:
-        photoAppear 0.6s ease both;
-
-    transition:
-        transform 0.35s ease,
-        box-shadow 0.35s ease,
-        border-color 0.35s ease;
-}
-
-.gallery-item::after {
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    background:
-        linear-gradient(
-            to bottom,
-            transparent 65%,
-            rgba(0,0,0,0.12)
-        );
-
-    opacity: 0;
-
-    transition: opacity 0.35s ease;
+    box-shadow: 0 8px 30px rgba(0,0,0,.18);
+    animation: photoAppear .5s ease both;
+    transition: transform .25s, box-shadow .25s;
 }
 
 .gallery-item:hover {
-    transform: translateY(-5px);
-
-    border-color:
-        rgba(226,165,181,0.2);
-
-    box-shadow:
-        0 18px 45px rgba(0,0,0,0.35);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,.3);
 }
-
-.gallery-item:hover::after {
-    opacity: 1;
-}
-
-/* imagem */
 
 .gallery-item img {
     display: block;
-
     width: 100%;
-
-    aspect-ratio: 1 / 1;
-
+    aspect-ratio: 1;
     object-fit: cover;
-
-    transition:
-        transform 0.6s cubic-bezier(.2,.7,.2,1),
-        opacity 0.35s ease;
+    transition: transform .5s;
 }
 
 .gallery-item:hover img {
-    transform: scale(1.045);
-
-    opacity: 0.94;
+    transform: scale(1.04);
 }
 
-/* =========================================================
-   ANIMAÇÃO
-   ========================================================= */
-
 @keyframes photoAppear {
-
     from {
         opacity: 0;
-        transform: translateY(15px);
+        transform: translateY(12px);
     }
 
     to {
         opacity: 1;
         transform: translateY(0);
     }
-
 }
 
-/* =========================================================
-   MODAL
-   ========================================================= */
+
+/* MODAIS */
 
 .modal-dialog {
     max-width: 940px;
 }
 
 .modal-content {
-    background: transparent;
-
-    border: none;
-
     overflow: hidden;
-
-    border-radius: 14px;
-
-    box-shadow:
-        0 30px 100px rgba(0,0,0,0.6);
+    border: 0;
+    border-radius: var(--radius);
+    background: transparent;
+    box-shadow: 0 30px 100px rgba(0,0,0,.6);
 }
-
-/* imagem ampliada */
 
 .modal-content > img {
     display: block;
-
     width: 100%;
-
     max-height: 76vh;
-
     object-fit: contain;
-
     background: #070608;
-
-    border-radius: 14px 14px 0 0;
+    border-radius: var(--radius) var(--radius) 0 0;
 }
 
-/* =========================================================
-   FECHAR
-   ========================================================= */
+.add-modal,
+.music-modal {
+    position: relative;
+    padding: 24px;
+    background: linear-gradient(145deg, #1b181c, #141215);
+    border: 1px solid var(--border);
+}
 
-.close-button {
-    position: absolute;
-
-    top: 14px;
-    right: 14px;
-
-    width: 40px;
-    height: 40px;
-
-    border: 1px solid rgba(255,255,255,0.08);
-
-    border-radius: 50%;
-
-    background:
-        rgba(0,0,0,0.5);
-
-    color: white;
-
-    z-index: 20;
-
+.add-header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
 
-    cursor: pointer;
+.add-header h2 {
+    color: var(--text);
+    font-size: 21px;
+    font-weight: 400;
+}
 
-    backdrop-filter: blur(12px);
-
-    transition:
-        background 0.25s ease,
-        transform 0.25s ease;
+.close-button {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: rgba(0,0,0,.4);
+    color: var(--muted);
+    font-size: 18px;
+    transition: background .15s, color .15s, transform .15s;
 }
 
 .close-button:hover {
-    background: var(--accent);
-
-    transform: scale(1.08);
+    background: rgba(200,121,145,.12);
+    color: var(--accent-light);
+    transform: scale(1.05);
 }
 
-/* =========================================================
-   NAVEGAÇÃO
-   ========================================================= */
+.add-header .close-button {
+    background: transparent;
+}
 
-.navigation {
-    position: absolute;
 
-    top: 43%;
+/* FORMULÁRIOS */
 
-    width: 46px;
-    height: 46px;
+#addPhotoForm,
+#addMusicForm {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
 
-    border: 1px solid rgba(255,255,255,0.08);
+#addPhotoForm label,
+#addMusicForm label {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 11px;
+}
 
-    border-radius: 50%;
+#addPhotoForm input,
+#addPhotoForm textarea,
+#addMusicForm input,
+#addMusicForm textarea {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    outline: none;
+    background: rgba(8,7,9,.65);
+    color: var(--text);
+    font: inherit;
+    font-size: 14px;
+}
 
-    background:
-        rgba(0,0,0,0.48);
+#addPhotoForm textarea,
+#addMusicForm textarea {
+    resize: vertical;
+    min-height: 90px;
+}
 
-    color: white;
+#addPhotoForm input:focus,
+#addPhotoForm textarea:focus,
+#addMusicForm input:focus,
+#addMusicForm textarea:focus {
+    border-color: rgba(200,121,145,.6);
+    box-shadow: 0 0 0 3px rgba(200,121,145,.08);
+}
 
-    z-index: 10;
+input::placeholder,
+textarea::placeholder {
+    color: #696168;
+}
 
+
+/* BOTÃO SALVAR */
+
+.save-button {
+    width: 100%;
+    min-height: 44px;
+    margin-top: 14px;
+    padding: 11px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--text);
+    color: var(--bg);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity .15s, transform .15s;
+}
+
+.save-button:hover {
+    background: var(--text);
+    color: var(--bg);
+    opacity: .82;
+}
+
+.save-button:active {
+    transform: scale(.98);
+}
+
+
+/* LISTA DE MÚSICAS */
+
+.music-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 55vh;
+    overflow-y: auto;
+}
+
+.music-list-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px;
+    border-radius: 11px;
+    background: var(--bg-soft);
+}
+
+.music-list-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.music-list-item-info strong,
+.music-list-item-info span {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.music-list-item-info strong {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.music-list-item-info span {
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.music-list-item button {
+    padding: 7px 10px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--muted);
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.music-list-item button:hover {
+    color: var(--text);
+}
+
+
+/* LINKS */
+
+.music-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.music-link {
+    width: 100%;
+    min-height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
+    border-radius: 10px;
+    background: var(--bg-soft);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 13px;
+    transition: opacity .15s;
+}
 
+.music-link:hover {
+    color: var(--text);
+    opacity: .8;
+}
+
+
+/* FOTO MODAL */
+
+.photo-info {
+    position: relative;
+    padding: 18px 21px 20px;
+    background: #171419;
+    border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.photo-info span {
+    display: block;
+    margin-bottom: 7px;
+    color: #756c72;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#modalCounter {
+    color: #756c72;
+}
+
+#modalDate {
+    margin-bottom: 8px;
+    color: var(--accent-light);
+    font-size: 12px;
+}
+
+#modalDescription {
+    padding-right: 50px;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.delete-button {
+    position: absolute;
+    right: 17px;
+    bottom: 17px;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: #756d72;
     cursor: pointer;
+}
 
-    backdrop-filter: blur(12px);
+.delete-button:hover {
+    background: rgba(200,121,145,.12);
+    color: var(--accent-light);
+}
 
-    transition:
-        background 0.25s ease,
-        transform 0.25s ease;
+
+/* NAVEGAÇÃO DA FOTO */
+
+.navigation {
+    position: absolute;
+    top: 43%;
+    width: 46px;
+    height: 46px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: rgba(0,0,0,.48);
+    color: white;
+    backdrop-filter: blur(10px);
+    transition: background .15s, transform .15s;
 }
 
 .navigation:hover {
     background: var(--accent);
-
-    transform: scale(1.08);
+    transform: scale(1.05);
 }
 
 .previous {
@@ -444,333 +595,23 @@ main {
     right: 15px;
 }
 
-/* =========================================================
-   INFORMAÇÕES
-   ========================================================= */
 
-.photo-info {
-    position: relative;
-
-    background:
-        linear-gradient(
-            145deg,
-            #19161a,
-            #141215
-        );
-
-    padding: 19px 22px 21px;
-
-    border-top:
-        1px solid var(--border);
-
-    border-radius:
-        0 0 14px 14px;
-}
-
-.photo-info span {
-    display: block;
-
-    margin-bottom: 8px;
-
-    color: #756c72;
-
-    font-size: 10px;
-
-    letter-spacing: 1px;
-
-    text-transform: uppercase;
-}
-
-/* contador da foto */
-
-#modalCounter {
-    color: #756c72;
-}
-
-/* data */
-
-#modalDate {
-    margin-bottom: 8px;
-
-    color: var(--accent-light);
-
-    font-size: 12px;
-
-    letter-spacing: 0.3px;
-}
-
-/* mensagem */
-
-#modalDescription {
-    padding-right: 50px;
-
-    color: var(--text);
-
-    font-size: 14px;
-
-    line-height: 1.65;
-}
-
-/* =========================================================
-   EXCLUIR
-   ========================================================= */
-
-.delete-button {
-    position: absolute;
-
-    right: 17px;
-    bottom: 17px;
-
-    width: 36px;
-    height: 36px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background: transparent;
-
-    color: #756d72;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    cursor: pointer;
-
-    transition:
-        background 0.25s ease,
-        color 0.25s ease,
-        transform 0.25s ease;
-}
-
-.delete-button:hover {
-    background:
-        rgba(200,121,145,0.13);
-
-    color:
-        var(--accent-light);
-
-    transform: scale(1.05);
-}
-
-/* =========================================================
-   MODAL ADICIONAR
-   ========================================================= */
-
-.add-modal {
-    background:
-        linear-gradient(
-            145deg,
-            #1b181c,
-            #141215
-        );
-
-    border:
-        1px solid rgba(255,255,255,0.08);
-
-    border-radius: 16px;
-
-    padding: 27px;
-
-    box-shadow:
-        0 30px 90px rgba(0,0,0,0.6);
-}
-
-/* cabeçalho */
-
-.add-header {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    margin-bottom: 25px;
-}
-
-.add-header h2 {
-    margin: 0;
-
-    color: var(--text);
-
-    font-size: 22px;
-
-    font-weight: 400;
-
-    letter-spacing: -0.5px;
-}
-
-.add-header .close-button {
-    position: static;
-
-    width: 34px;
-    height: 34px;
-
-    background: transparent;
-
-    color: var(--muted);
-
-    backdrop-filter: none;
-}
-
-.add-header .close-button:hover {
-    background:
-        rgba(200,121,145,0.12);
-
-    color:
-        var(--accent-light);
-}
-
-/* =========================================================
-   FORMULÁRIO
-   ========================================================= */
-
-#addPhotoForm {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 8px;
-}
-
-#addPhotoForm label {
-    margin-top: 11px;
-
-    color: var(--muted);
-
-    font-size: 11px;
-
-    letter-spacing: 0.3px;
-
-    text-transform: lowercase;
-}
-
-#addPhotoForm input,
-#addPhotoForm textarea {
-    width: 100%;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 9px;
-
-    padding: 12px 13px;
-
-    background:
-        rgba(8,7,9,0.65);
-
-    color: var(--text);
-
-    font-family: inherit;
-
-    font-size: 14px;
-
-    transition:
-        border-color 0.25s ease,
-        box-shadow 0.25s ease,
-        background 0.25s ease;
-}
-
-#addPhotoForm input:focus,
-#addPhotoForm textarea:focus {
-    outline: none;
-
-    background:
-        rgba(20,17,20,0.9);
-
-    border-color:
-        rgba(200,121,145,0.65);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(200,121,145,0.09);
-}
-
-#addPhotoForm textarea {
-    min-height: 105px;
-
-    resize: vertical;
-}
-
-#addPhotoForm input::placeholder,
-#addPhotoForm textarea::placeholder {
-    color: #696168;
-}
-
-/* =========================================================
-   BOTÃO SALVAR
-   ========================================================= */
-
-.save-button {
-    margin-top: 18px;
-
-    padding: 13px;
-
-    border: none;
-
-    border-radius: 9px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--accent),
-            #b7657e
-        );
-
-    color: white;
-
-    font-size: 14px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 8px 25px
-        rgba(184,107,131,0.16);
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        filter 0.2s ease;
-}
-
-.save-button:hover {
-    transform: translateY(-2px);
-
-    filter: brightness(1.06);
-
-    box-shadow:
-        0 12px 30px
-        rgba(184,107,131,0.24);
-}
-
-.save-button:active {
-    transform: translateY(0);
-}
-
-/* =========================================================
-   BACKDROP
-   ========================================================= */
+/* BACKDROP */
 
 .modal-backdrop.show {
-    opacity: 0.86;
+    opacity: .86;
 }
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
+
+/* MOBILE */
 
 @media (max-width: 700px) {
-
     main {
-        padding:
-            30px
-            14px
-            70px;
+        padding: 30px 14px 70px;
     }
 
     .top {
-        margin-bottom: 30px;
+        margin-bottom: 24px;
     }
 
     .top h1 {
@@ -779,23 +620,11 @@ main {
 
     #contador {
         max-width: 280px;
-
         font-size: 11px;
-
-        line-height: 1.6;
-    }
-
-    .add-button {
-        width: 40px;
-        height: 40px;
-
-        font-size: 18px;
     }
 
     .gallery {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-
+        grid-template-columns: repeat(2, 1fr);
         gap: 9px;
     }
 
@@ -805,9 +634,6 @@ main {
 
     .modal-content > img {
         max-height: 70vh;
-
-        border-radius:
-            8px 8px 0 0;
     }
 
     .navigation {
@@ -823,26 +649,14 @@ main {
         right: 7px;
     }
 
-    .photo-info {
-        padding:
-            16px
-            17px
-            18px;
-    }
-
-    .add-modal {
+    .add-modal,
+    .music-modal {
         margin: 10px;
-
         padding: 21px;
     }
 }
 
-/* =========================================================
-   CELULARES PEQUENOS
-   ========================================================= */
-
 @media (max-width: 400px) {
-
     main {
         padding-left: 10px;
         padding-right: 10px;
@@ -852,10 +666,6 @@ main {
         gap: 6px;
     }
 
-    .top {
-        margin-bottom: 25px;
-    }
-
     .top h1 {
         font-size: 25px;
     }
@@ -863,407 +673,14 @@ main {
     #contador {
         font-size: 10px;
     }
-
 }
 
-/* =========================================================
-   REDUÇÃO DE MOVIMENTO
-   ========================================================= */
-
 @media (prefers-reduced-motion: reduce) {
-
     *,
     *::before,
     *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
         scroll-behavior: auto !important;
-
-        transition-duration: 0.01ms !important;
-    }
-
-}
-/* =========================
-   MÚSICA DO DIA
-========================= */
-
-.music-section {
-    margin: 24px 0 28px;
-}
-
-.section-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    padding: 0 4px;
-}
-
-.section-title span {
-    font-size: 13px;
-    color: var(--text-muted);
-    text-transform: lowercase;
-    letter-spacing: 0.3px;
-}
-
-.music-manage-btn {
-    width: 34px;
-    height: 34px;
-    border: none;
-    border-radius: 50%;
-    background: var(--card);
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: 0.2s ease;
-    padding: 0;
-}
-
-.music-manage-btn:hover {
-    background: var(--background-light);
-    color: var(--text);
-}
-
-.music-manage-btn:active {
-    transform: scale(0.92);
-}
-
-/* CARD DA MÚSICA */
-
-.daily-music {
-    width: 100%;
-}
-
-.music-note {
-    width: 100%;
-    min-height: 68px;
-    padding: 12px 14px;
-
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    background: var(--card);
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 16px;
-
-    cursor: pointer;
-    transition: 0.2s ease;
-}
-
-.music-note:hover {
-    transform: translateY(-1px);
-    border-color: rgba(255,255,255,0.09);
-}
-
-.music-note:active {
-    transform: scale(0.985);
-}
-
-.music-note-icon {
-    width: 42px;
-    height: 42px;
-    flex-shrink: 0;
-
-    border-radius: 12px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(217, 160, 174, 0.12);
-    color: var(--accent);
-
-    font-size: 20px;
-}
-
-.music-note-info {
-    min-width: 0;
-    flex: 1;
-
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-}
-
-.music-note-info strong {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.music-note-info span {
-    font-size: 12px;
-    color: var(--text-muted);
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.music-arrow {
-    color: var(--text-muted);
-    font-size: 14px;
-}
-
-/* ESTADO VAZIO */
-
-.music-empty {
-    min-height: 64px;
-    padding: 14px;
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    border: 1px dashed rgba(255,255,255,0.08);
-    border-radius: 16px;
-
-    color: var(--text-muted);
-    font-size: 12px;
-}
-
-.music-empty i {
-    font-size: 18px;
-    opacity: 0.7;
-}
-
-
-/* =========================
-   BOTÃO ADICIONAR FOTO
-========================= */
-
-.add-button {
-    width: 42px;
-    height: 42px;
-
-    border: none;
-    border-radius: 50%;
-
-    background: var(--text);
-    color: var(--background);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 0;
-    flex-shrink: 0;
-
-    font-size: 21px;
-    line-height: 1;
-
-    cursor: pointer;
-
-    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-
-    transition:
-        transform 0.2s ease,
-        opacity 0.2s ease;
-}
-
-.add-button:hover {
-    opacity: 0.9;
-    transform: scale(1.05);
-}
-
-.add-button:active {
-    transform: scale(0.92);
-}
-
-.add-button i {
-    display: block;
-}
-
-
-/* =========================
-   BOTÕES DOS MODAIS
-========================= */
-
-.save-button {
-    width: 100%;
-    min-height: 46px;
-
-    border: none;
-    border-radius: 12px;
-
-    background: var(--text);
-    color: var(--background);
-
-    font-size: 14px;
-    font-weight: 500;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-
-    cursor: pointer;
-    transition: 0.2s ease;
-
-    margin-top: 18px;
-}
-
-.save-button:hover {
-    opacity: 0.9;
-}
-
-.save-button:active {
-    transform: scale(0.98);
-}
-
-
-/* =========================
-   LISTA DE MÚSICAS
-========================= */
-
-.music-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    max-height: 55vh;
-    overflow-y: auto;
-}
-
-.music-list-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    padding: 11px;
-
-    background: var(--background-light);
-    border-radius: 12px;
-}
-
-.music-list-item-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.music-list-item-info strong {
-    display: block;
-
-    font-size: 13px;
-    font-weight: 500;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.music-list-item-info span {
-    display: block;
-
-    margin-top: 2px;
-
-    font-size: 11px;
-    color: var(--text-muted);
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.music-list-item button {
-    border: none;
-    border-radius: 9px;
-
-    padding: 7px 10px;
-
-    background: var(--card);
-    color: var(--text-muted);
-
-    font-size: 11px;
-
-    cursor: pointer;
-}
-
-.music-list-item button:hover {
-    color: var(--text);
-}
-
-
-/* =========================
-   LINKS DA MÚSICA
-========================= */
-
-.music-links {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 20px;
-}
-
-.music-link {
-    width: 100%;
-    min-height: 44px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-
-    border-radius: 11px;
-
-    text-decoration: none;
-
-    font-size: 13px;
-    font-weight: 500;
-
-    background: var(--background-light);
-    color: var(--text);
-
-    transition: 0.2s ease;
-}
-
-.music-link:hover {
-    color: var(--text);
-    opacity: 0.85;
-}
-
-.music-link:active {
-    transform: scale(0.98);
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 576px) {
-
-    .music-section {
-        margin-top: 20px;
-        margin-bottom: 24px;
-    }
-
-    .music-note {
-        min-height: 64px;
-        padding: 10px 12px;
-        border-radius: 14px;
-    }
-
-    .music-note-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 11px;
-    }
-
-    .music-manage-btn {
-        width: 32px;
-        height: 32px;
-    }
-
-    .add-button {
-        width: 40px;
-        height: 40px;
     }
 }
