@@ -24,7 +24,14 @@
 
     <link rel="stylesheet" href="style.css">
 </head>
-
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js")
+            .catch(error => console.error("Erro no Service Worker:", error));
+    });
+}
+</script>
 <body>
 
     <main class="container">
