@@ -217,7 +217,7 @@ addPhotoForm.addEventListener("submit", async event => {
     formData.append("mensagem", addMessage.value);
 
    try {
-    alert("Enviando foto...");
+    
 
     const controller = new AbortController();
 
