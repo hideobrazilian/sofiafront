@@ -206,7 +206,7 @@ addPhotoForm.addEventListener("submit", async event => {
     formData.append("data_momento", addDate.value);
     formData.append("mensagem", addMessage.value);
 
-    try {
+   try {
     alert("Enviando foto...");
 
     const response = await fetch(API_URL, {
@@ -243,6 +243,7 @@ addPhotoForm.addEventListener("submit", async event => {
         "\nMensagem: " + error.message
     );
 }
+});
 
 
 // ==========================
