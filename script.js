@@ -216,43 +216,67 @@ addPhotoForm.addEventListener("submit", async event => {
     formData.append("data_momento", addDate.value);
     formData.append("mensagem", addMessage.value);
 
-    try {
-        alert("Enviando foto...");
+   try {
+    alert("Enviando foto...");
 
-        const response = await fetch(API_URL, {
-            method: "POST",
-            body: formData
-        });
+    const controller = new AbortController();
 
-        alert("Servidor respondeu: " + response.status);
+    const timeout = setTimeout(() => {
+        controller.abort();
+    }, 60000); // 60 segundos
 
-        const resultado = await response.json();
+    console.log("Iniciando upload...");
+    console.log("Arquivo:", arquivo.name);
+    console.log("Tipo:", arquivo.type);
+    console.log("Tamanho:", arquivo.size);
 
-        if (!response.ok) {
-            throw new Error(
-                resultado.erro || "Erro ao adicionar foto."
-            );
-        }
+    const response = await fetch(API_URL, {
+        method: "POST",
+        body: formData,
+        signal: controller.signal
+    });
 
-        alert("Foto salva!");
+    clearTimeout(timeout);
 
-        addPhotoForm.reset();
+    alert("Servidor respondeu: " + response.status);
 
-        bootstrap.Modal
-            .getInstance(document.getElementById("addModal"))
-            ?.hide();
+    const resultado = await response.json();
 
-        await loadPhotos();
+    console.log("Resposta:", resultado);
 
-    } catch (error) {
-        console.error(error);
+    if (!response.ok) {
+        throw new Error(
+            resultado.erro || "Erro ao adicionar foto."
+        );
+    }
 
+    alert("Foto salva!");
+
+    addPhotoForm.reset();
+
+    bootstrap.Modal
+        .getInstance(document.getElementById("addModal"))
+        ?.hide();
+
+    await loadPhotos();
+
+} catch (error) {
+
+    console.error("ERRO NO UPLOAD:", error);
+
+    if (error.name === "AbortError") {
+        alert(
+            "O upload demorou mais de 60 segundos.\n\n" +
+            "O servidor não respondeu a tempo."
+        );
+    } else {
         alert(
             "FALHA NO UPLOAD\n\n" +
             "Tipo: " + error.name +
             "\nMensagem: " + error.message
         );
     }
+}
 });
 
 
