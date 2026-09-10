@@ -200,49 +200,59 @@ addPhotoForm.addEventListener("submit", async event => {
         return;
     }
 
+    const arquivo = addImage.files[0];
+
+    alert(
+        "Foto selecionada:\n" +
+        arquivo.name +
+        "\nTamanho: " +
+        (arquivo.size / 1024 / 1024).toFixed(2) +
+        " MB"
+    );
+
     const formData = new FormData();
 
-    formData.append("imagem", addImage.files[0]);
+    formData.append("imagem", arquivo);
     formData.append("data_momento", addDate.value);
     formData.append("mensagem", addMessage.value);
 
-   try {
-    alert("Enviando foto...");
+    try {
+        alert("Enviando foto...");
 
-    const response = await fetch(API_URL, {
-        method: "POST",
-        body: formData
-    });
+        const response = await fetch(API_URL, {
+            method: "POST",
+            body: formData
+        });
 
-    alert("Servidor respondeu: " + response.status);
+        alert("Servidor respondeu: " + response.status);
 
-    const resultado = await response.json();
+        const resultado = await response.json();
 
-    if (!response.ok) {
-        throw new Error(
-            resultado.erro || "Erro ao adicionar foto."
+        if (!response.ok) {
+            throw new Error(
+                resultado.erro || "Erro ao adicionar foto."
+            );
+        }
+
+        alert("Foto salva!");
+
+        addPhotoForm.reset();
+
+        bootstrap.Modal
+            .getInstance(document.getElementById("addModal"))
+            ?.hide();
+
+        await loadPhotos();
+
+    } catch (error) {
+        console.error(error);
+
+        alert(
+            "FALHA NO UPLOAD\n\n" +
+            "Tipo: " + error.name +
+            "\nMensagem: " + error.message
         );
     }
-
-    alert("Foto salva!");
-
-    addPhotoForm.reset();
-
-    bootstrap.Modal
-        .getInstance(document.getElementById("addModal"))
-        ?.hide();
-
-    await loadPhotos();
-
-} catch (error) {
-    console.error("Erro:", error);
-
-    alert(
-        "FALHA NO UPLOAD\n\n" +
-        "Tipo: " + error.name +
-        "\nMensagem: " + error.message
-    );
-}
 });
 
 
